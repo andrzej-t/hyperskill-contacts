@@ -1,32 +1,48 @@
 package contacts;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public abstract class BaseRecord {
+public abstract class BaseRecord implements Serializable {
 
     private String phoneNumber;
-    private final LocalDateTime dateOfCreation = LocalDateTime.now().withSecond(0).withNano(0);
-    private LocalDateTime dateOfLastEdit = LocalDateTime.now().withSecond(0).withNano(0);
+    private LocalDateTime dateOfCreation;
+    private LocalDateTime dateOfLastEdit;
+
+    public BaseRecord(String phoneNumber, LocalDateTime dateOfCreation, LocalDateTime dateOfLastEdit) {
+        this.phoneNumber = phoneNumber;
+        this.dateOfCreation = dateOfCreation;
+        this.dateOfLastEdit = dateOfLastEdit;
+    }
 
     public BaseRecord() {
     }
 
-    public String getPhoneNumber() {
+    public abstract BaseRecord createRecord();
+
+    public abstract String getFirstField();
+
+    public abstract void editField(int index);
+
+    public abstract String getAllFields();
+
+    protected String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    protected void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public LocalDateTime getDateOfCreation() {
+    protected LocalDateTime getDateOfCreation() {
         return dateOfCreation;
     }
 
-    public LocalDateTime getDateOfLastEdit() {
+    protected LocalDateTime getDateOfLastEdit() {
         return dateOfLastEdit;
     }
-    public void setDateOfLastEdit(LocalDateTime dateOfLastEdit) {
-        this.dateOfLastEdit = dateOfLastEdit;
+
+    protected void setDateOfLastEdit() {
+        this.dateOfLastEdit = LocalDateTime.now().withSecond(0).withNano(0);
     }
 }
